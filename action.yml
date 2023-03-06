@@ -1,0 +1,53 @@
+name: 'Influxdb in GitHub Actions'
+description: 'Start a Influxdb as Docker container'
+
+branding:
+  icon: 'message-square'
+  color: 'blue'
+
+inputs:
+  version:
+    description: 'Influxdb version to use'
+    required: false
+    default: 'latest'
+  ports:
+    description: 'Port mappings in a [host]:[container] format, delimited by spaces (example: "8086:8086")'
+    required: false
+    default: '8086:8086'
+  container-name:
+    description: 'The name of the spawned Docker container (can be used as hostname when accessed from other containers)'
+    required: false
+    default: 'influxdb'
+  influxdb_org:
+    description: 'The initial Organization of the InfluxDB instance.'
+    required: false
+    default: 'org'
+  influxdb_user:
+    description: 'The initial User of the InfluxDB instance.'
+    required: false
+    default: 'admin'
+  influxdb_password:
+    description: 'The initial Password of the InfluxDB instance.'
+    required: false
+    default: 'password'
+  influxdb_bucket:
+    description: 'The initial Bucket of the InfluxDB instance.'
+    required: false
+    default: 'bucket'
+  influxdb_token:
+    description: 'The initial Token of the InfluxDB instance.'
+    required: false
+    default: 'XXXXXX'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.version }}
+    - ${{ inputs.ports }}
+    - ${{ inputs.container-name }}
+    - ${{ inputs.influxdb_org }}
+    - ${{ inputs.influxdb_user }}
+    - ${{ inputs.influxdb_password }}
+    - ${{ inputs.influxdb_bucket }}
+    - ${{ inputs.influxdb_token }}

@@ -1,0 +1,27 @@
+name: Test Action
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test-broker:
+    name: Test influxdb Docker image version [${{ matrix.version }}]
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version: ['1.8', '2.0', '2.6', 'latest']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Start influxdb
+        uses: ./
+        with:
+          version: ${{ matrix.version }}
